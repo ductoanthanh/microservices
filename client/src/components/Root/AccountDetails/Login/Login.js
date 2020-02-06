@@ -2,9 +2,11 @@ import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import React from "react";
 import useForm from "react-hook-form";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import TextInput from "#root/components/shared/TextInput";
+import { setSession } from "#root/store/ducks/session";
 
 const Label = styled.label`
   display: block;
@@ -24,6 +26,10 @@ const LoginButton = styled.button`
   margin-top: 0.5rem;
 `;
 
+const OrSignUp = styled.span`
+  font-size: 0.9rem;
+`;
+
 const mutation = gql`
   mutation($email: String!, $password: String!) {
     createUserSession(email: $email, password: $password) {
@@ -36,8 +42,8 @@ const mutation = gql`
   }
 `;
 
-const Login = () => {
-  const [createUserSession] = useMutation(mutation);
+const Login = ({ onChangeToSignUp: pushChangeToSignUp }) => {
+  const dispatch = useDispatch();
 
   const {
     formState: { isSubmitting },
@@ -45,9 +51,13 @@ const Login = () => {
     register
   } = useForm();
 
+  const [createUserSession] = useMutation(mutation);
+
   const onSubmit = handleSubmit(async ({ email, password }) => {
-    const result = await createUserSession({ variables: { email, password } });
-    console.log(result);
+    const {
+      data: { createUserSession: createdSession }
+    } = await createUserSession({ variables: { email, password } });
+    dispatch(setSession(createdSession));
   });
 
   return (
@@ -73,6 +83,18 @@ const Login = () => {
       <LoginButton disabled={isSubmitting} type="submit">
         Login
       </LoginButton>
+      <OrSignUp>
+        or
+        <a
+          href="#"
+          onClick={evt => {
+            evt.preventDefault();
+            pushChangeToSignUp();
+          }}
+        >
+          Sign Up
+        </a>
+      </OrSignUp>
     </form>
   );
 };
