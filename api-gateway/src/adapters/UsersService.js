@@ -1,6 +1,8 @@
 import got from "got";
 
-const USERS_SERVICE_URI = "http://users-service:7101";
+import accessEnv from "#root/helpers/accessEnv";
+
+const USERS_SERVICE_URI = accessEnv("USERS_SERVICE_URI");
 
 export default class UsersService {
   // use object to pass param in function for adding more params if needed without caring about order
