@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { setSession } from "#root/store/ducks/session";
 
 import AccountDetails from "./AccountDetails";
+import Listings from "./Listings";
 
 const query = gql`
   {
@@ -63,7 +64,9 @@ const Root = () => {
   return (
     <Wrapper>
       <Container>
-        <Content>assdasd</Content>
+        <Content>
+          <Listings />
+        </Content>
         <Sidebar>
           <AccountDetails />
         </Sidebar>
