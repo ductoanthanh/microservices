@@ -17,3 +17,11 @@ variable "listings-service-db-password" {
 variable "listings-service-db-username" {
   type = string
 }
+
+variable "users-service-db-password" {
+  type = string
+}
+
+variable "users-service-db-username" {
+  type = string
+}

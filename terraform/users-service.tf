@@ -1,14 +1,14 @@
-resource "aws_eip" "listings-service-eip" {
-  instance = module.listings-service.instance-id
+resource "aws_eip" "users-service-eip" {
+  instance = module.users-service.instance-id
 }
 
-module "listings-service" {
+module "users-service" {
   source = "./node-server"
 
   ami-id     = "ami-0b8b10b5bf11f3a22"
   key-pair   = aws_key_pair.microservices-key.key_name
-  name       = "listings-service"
-  private-ip = "10.0.1.5"
+  name       = "users-service"
+  private-ip = "10.0.1.6"
   subnet-id  = aws_subnet.microservices-demo-subnet-private-1.id
   vpc-security-group-ids = [
     aws_security_group.allow-internal-http.id,
@@ -17,15 +17,15 @@ module "listings-service" {
   ]
 }
 
-module "listings-service-db" {
+module "users-service-db" {
   source = "./mysql-db"
 
   apply-immediately      = true
   db-name                = "db"
   db-subnet-group-name   = aws_db_subnet_group.private.id
-  identifier             = "listings-service-db"
-  password               = var.listings-service-db-password
+  identifier             = "users-service-db"
+  password               = var.users-service-db-password
   publicly-accessible    = false
-  username               = var.listings-service-db-username
+  username               = var.users-service-db-username
   vpc-security-group-ids = [aws_security_group.allow-internal-mysql.id]
 }
