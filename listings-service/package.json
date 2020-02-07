@@ -5,12 +5,15 @@
   "license": "MIT",
   "scripts": {
     "db:migrate": "sequelize db:migrate",
+    "deploy": "node-deploy $(pwd)",
     "db:migrate:undo": "sequelize db:migrate:undo",
     "build": "webpack --progress",
+    "linkall": "npm link node-deploy",
     "watch": "babel-watch -L src/index.js"
   },
   "devDependencies": {
     "babel-watch": "^7.0.0",
+    "node-deploy": "../node-deploy",
     "nodemon": "^2.0.2"
   },
   "dependencies": {
@@ -21,6 +24,7 @@
     "babel-plugin-module-resolver": "~4.0.0",
     "body-parser": "~1.19.0",
     "cors": "~2.8.5",
+    "dotenv": "^8.2.0",
     "express": "~4.17.1",
     "mysql2": "~2.0.2",
     "sequelize": "~5.21.3",

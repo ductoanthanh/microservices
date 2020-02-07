@@ -2,7 +2,9 @@ by default GraphQL playground do not show cookie --> enable by Settings -> "requ
 
 give Terraform admin right in IAM
 terraform init
-terraform apply - yes
+terraform apply
 terraform destroy
 
-ssh -i ./microservices.key ec2-user@<ip-address>
+ssh -i ./microservices.key ec2-user@ip-address (if ssh is enabled in security group)
+
+To deploy, run npm run deploy
