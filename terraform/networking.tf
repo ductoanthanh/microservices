@@ -29,6 +29,11 @@ resource "aws_route_table_association" "microservices-demo-subnet-public" {
   route_table_id = aws_route_table.allow-outgoing-access.id
 }
 
+resource "aws_route_table_association" "microservices-demo-subnet-private-1" {
+  subnet_id      = aws_subnet.microservices-demo-subnet-private-1.id
+  route_table_id = aws_route_table.allow-outgoing-access.id
+}
+
 resource "aws_security_group" "allow-internal-http" {
   name        = "allow-internal-http"
   description = "Allow internal HTTP requests"
