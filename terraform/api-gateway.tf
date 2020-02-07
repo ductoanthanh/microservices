@@ -5,10 +5,11 @@ resource "aws_eip" "api-gateway-eip" {
 module "api-gateway" {
   source = "./node-server"
 
-  ami-id    = "ami-0b8b10b5bf11f3a22"
-  key-pair  = aws_key_pair.microservices-key.key_name
-  name      = "api-gateway"
-  subnet-id = aws_subnet.microservices-demo-subnet-public.id
+  ami-id               = "ami-0b8b10b5bf11f3a22"
+  iam-instance-profile = module.api-gateway-codedeploy.iam-instance-profile # give access to codedeploy from server
+  key-pair             = aws_key_pair.microservices-key.key_name
+  name                 = "api-gateway"
+  subnet-id            = aws_subnet.microservices-demo-subnet-public.id
   vpc-security-group-ids = [
     aws_security_group.allow-http.id,
     aws_security_group.allow-ssh.id,
@@ -16,9 +17,9 @@ module "api-gateway" {
   ]
 }
 
-# module "api-gateway-codedeploy" {
-#   source = "./codedeploy-app"
+module "api-gateway-codedeploy" {
+  source = "./codedeploy-app"
 
-#   app-name          = "api-gateway"
-#   ec2-instance-name = module.api-gateway.name
-# }
+  app-name          = "api-gateway"
+  ec2-instance-name = module.api-gateway.name
+}
