@@ -4,3 +4,5 @@ give Terraform admin right in IAM
 terraform init
 terraform apply - yes
 terraform destroy
+
+ssh -i ./microservices.key ec2-user@<ip-address>
